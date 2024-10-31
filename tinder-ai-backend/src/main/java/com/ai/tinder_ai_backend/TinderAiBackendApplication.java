@@ -30,7 +30,11 @@ public class TinderAiBackendApplication implements CommandLineRunner {
 
 //	this run method run when Application starts that is Hard coded
 	public void run(String... args) throws Exception {
-		System.out.println("My Tinder_AI_App is up and Running");
+		System.err.println("My Tinder_AI_App is up and Running");
+
+		profileRepository.deleteAll();
+		conversationRepository.deleteAll();
+
 		Profile profile = new Profile(
 				"1",
 				"Chaman",
@@ -38,8 +42,20 @@ public class TinderAiBackendApplication implements CommandLineRunner {
 				39,
 				Gender.MALE,
 				"Indian",
-				"Software Enginner",
+				"Software Engineer",
 				"foo.jpg",
+				"INTP"
+		);
+		profileRepository.save(profile);
+		 profile = new Profile(
+				"2",
+				"Mangoo",
+				"Moti",
+				44,
+				Gender.FEMALE,
+				"Nepali",
+				"QA",
+				"laml.jpg",
 				"INTP"
 		);
 		profileRepository.save(profile);
