@@ -2,12 +2,14 @@ package com.ai.tinder_ai_backend.conversations;
 
 import com.ai.tinder_ai_backend.profiles.ProfileRepository;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import java.util.UUID;
@@ -25,7 +27,9 @@ public class ConversationController {
 
     @PostMapping("/conversations")
     public Conversation createConversation(@RequestBody CreateConversationRequest request) {
-        profileRepository.findById(request.profileId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        profileRepository.findById(request.profileId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find conversation Id : "+ request.profileId));
 
         Conversation conversation = new Conversation(
                 UUID.randomUUID().toString(),
@@ -35,6 +39,23 @@ public class ConversationController {
         conversationRepository.save(conversation);
         return conversation;
     }
+
+    @PostMapping("/conversations/{conversationId}")
+    public Conversation addMessageToConversation(@PathVariable String conversationId, @RequestBody ChatMessages chatMessages) {
+        Conversation conversation = conversationRepository.findById(conversationId).
+                orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find conversation Id : "+ conversationId));
+        profileRepository.findById(chatMessages.authorId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find conversation Id : "+ chatMessages.authorId()));
+//        TODO --------
+        ChatMessages messageWithTime = new ChatMessages(chatMessages.messageText(),chatMessages.authorId(), LocalDateTime.now());
+        conversation.messages().add(chatMessages);
+        conversationRepository.save(conversation);
+
+        return conversation;
+    }
+
 
     public record CreateConversationRequest(
             String profileId
