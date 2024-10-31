@@ -23,7 +23,7 @@ public class ConversationController {
         this.profileRepository = profileRepository;
     }
 
-    @PostMapping("/conversation")
+    @PostMapping("/conversations")
     public Conversation createConversation(@RequestBody CreateConversationRequest request) {
         profileRepository.findById(request.profileId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
