@@ -6,6 +6,9 @@ import com.ai.tinder_ai_backend.conversations.ConversationRepository;
 import com.ai.tinder_ai_backend.profiles.Gender;
 import com.ai.tinder_ai_backend.profiles.Profile;
 import com.ai.tinder_ai_backend.profiles.ProfileRepository;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,14 +26,25 @@ public class TinderAiBackendApplication implements CommandLineRunner {
 	@Autowired
 	private ConversationRepository conversationRepository;
 
-	public static void main(String[] args) {
+//	Open AI Chat client Injected
+	@Autowired
+	private OpenAiChatModel chatModel;
+
+    public static void main(String[] args) {
 		SpringApplication.run(TinderAiBackendApplication.class, args);
-//		System.err.println("Tinder App is Up and Running");
 	}
 
 //	this run method run when Application starts that is Hard coded
 	public void run(String... args) throws Exception {
 		System.err.println("My Tinder_AI_App is up and Running");
+
+		Prompt prompt = new Prompt("Who is Elon Musk");
+		ChatResponse response = chatModel.call(prompt);
+		System.out.println(response.getResult().getOutput());
+
+//		String response = chatModel.call("Who is Narendra Modi");
+//		System.out.println(response);
+
 
 		profileRepository.deleteAll();
 		conversationRepository.deleteAll();
