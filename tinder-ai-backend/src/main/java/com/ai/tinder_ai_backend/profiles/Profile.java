@@ -5,11 +5,10 @@ public record Profile(
         String firstName,
         String lastName,
         int age,
-        Gender gender,
         String ethnicity,
+        Gender gender,
         String bio,
         String imageUrl,
         String myersBriggsPersonalityType
 ) {
-
 }
