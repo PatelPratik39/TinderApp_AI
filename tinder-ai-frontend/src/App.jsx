@@ -69,14 +69,15 @@ const MatchesList = ({ matches, onSelectMatch }) => (
   <div className="rounded-lg shadow-lg p-4">
     <h2 className="text-2xl font-bold mb-4 text-left"> Matches</h2>
     <ul>
-      {matches.map((match) => (
-        <li key={match.profile.id || match.id} className="mb-2">
+      {matches.map((match,index) => (
+        <li key={`${match.profile?.id || match.id}-${index}`} className="mb-2">
           <button
             className="w-full rounded flex item-center hover:bg-gray-100"
             onClick={onSelectMatch}
           >
             <img
               src={"http://127.0.0.1:8081/" + match.profile.imageUrl}
+              alt={`${match.firstName} ${match.lastName}`}
               className="w-16 h-16 rounded-full mr-3 object-cover"
             />
             <span>
