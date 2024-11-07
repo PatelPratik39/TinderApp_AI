@@ -30,7 +30,7 @@ const ProfileSelector = () => (
   </div>
 );
 
-const MatchesList = () => (
+const MatchesList = ({ onSelectMatch }) => (
   <div className="rounded-lg shadow-lg p-4">
     <h2 className="text-2xl font-bold mb-4 text-left"> Matches</h2>
     <ul>
@@ -51,7 +51,10 @@ const MatchesList = () => (
         }
       ].map((match) => (
         <li key={match.id} className="mb-2">
-          <button className="w-full rounded flex item-center hover:bg-gray-100">
+          <button
+            className="w-full rounded flex item-center hover:bg-gray-100"
+            onClick={onSelectMatch}
+          >
             <img
               src={match.imageUrl}
               className="w-16 h-16 rounded-full mr-3 object-cover"
@@ -107,14 +110,14 @@ const ChatScreen = () => {
 };
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState("chat");
+  const [currentScreen, setCurrentScreen] = useState("profile");
 
   const renderScreen = () => {
     switch (currentScreen) {
       case "profile":
         return <ProfileSelector />;
       case "matches":
-        return <MatchesList />;
+        return <MatchesList onSelectMatch={() => setCurrentScreen('chat')}/>;
       case "chat":
         return <ChatScreen />;
       default:
