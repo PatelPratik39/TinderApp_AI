@@ -36,7 +36,9 @@ public class MatchController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find conversation Id : "+ request.profileId));
 
-       //TODO :make sure not existing conversation present
+       //TODO :make sure not existing conversation present with profile
+
+
 
         Conversation conversation = new Conversation(
                 UUID.randomUUID().toString(),

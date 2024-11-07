@@ -131,6 +131,7 @@ const ChatScreen = () => {
 };
 
 function App() {
+  // 
   const loadRandomProfile = async () => {
     try {
       const profile = await fetchRandomProfile();
@@ -139,6 +140,7 @@ function App() {
       console.error(error);
     }
   };
+  // 
   const loadMatches = async () => {
     try {
       const matches = await fetchMatches();
