@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import java.util.UUID;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ConversationController {
 
@@ -37,6 +38,7 @@ public class ConversationController {
         return conversation;
     }
 
+//    @CrossOrigin(origins = "*")
     @GetMapping("/conversations/{conversationId}")
     public Conversation getConversationById(@PathVariable String conversationId) {
        return conversationRepository.findById(conversationId).
