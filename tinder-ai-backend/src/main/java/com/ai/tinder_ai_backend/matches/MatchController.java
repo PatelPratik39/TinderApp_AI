@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -36,7 +37,11 @@ public class MatchController {
                         "Unable to find conversation Id : "+ request.profileId));
 
        //TODO :make sure not existing conversation present with profile
-
+        Optional<Match> existingMatch = matchRepository.findByProfileId(request.profileId());
+        if(existingMatch.isPresent()){
+//            matchRepository.deleteByProfileId(request.profileId());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Match with this profile already exists");
+        }
 
 
         Conversation conversation = new Conversation(
