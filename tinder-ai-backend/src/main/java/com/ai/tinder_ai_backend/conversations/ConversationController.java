@@ -28,7 +28,6 @@ public class ConversationController {
         profileRepository.findById(request.profileId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find conversation Id : "+ request.profileId));
-
         Conversation conversation = new Conversation(
                 UUID.randomUUID().toString(),
                 request.profileId(),
@@ -38,7 +37,7 @@ public class ConversationController {
         return conversation;
     }
 
-//    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "*")
     @GetMapping("/conversations/{conversationId}")
     public Conversation getConversationById(@PathVariable String conversationId) {
        return conversationRepository.findById(conversationId).
